@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaraniemela <saaraniemela@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:42:55 by sniemela          #+#    #+#             */
-/*   Updated: 2025/05/09 12:57:49 by sniemela         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:01:54 by saaraniemel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 class ScalarConverter
 {
 	public:
-		static void converter(const std::string& literal);
-
-	ScalarConverter() = delete;
-    ~ScalarConverter() = delete;
-    ScalarConverter(const ScalarConverter&) = delete;
-    ScalarConverter& operator=(const ScalarConverter&) = delete;
+		void converter(const std::string& literal);
+	private:
+		ScalarConverter() = delete;
+    	~ScalarConverter() = delete;
+    	ScalarConverter(const ScalarConverter&) = delete;
+    	ScalarConverter& operator=(const ScalarConverter&) = delete;
 };
