@@ -6,7 +6,7 @@
 /*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:09:21 by sniemela          #+#    #+#             */
-/*   Updated: 2025/07/24 10:03:14 by sniemela         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:41:52 by sniemela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,50 @@ bool	strIsChar(const std::string &str)
 	return (str.size() == 1);
 }
 
-void	charToChar(const std::string &str)
+int		floatAndDoubleToInt(const std::string &str)
+{
+	std::string temp = str;
+	int ret = 0;
+
+	if (temp.back() == 'f')
+	{
+		temp.pop_back();
+	}
+	try 
+	{
+		ret = std::stoi(temp);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	return (ret);
+}
+
+void	ToChar(const std::string &str)
 {
 	// try catch for unprintable characters
 	try 
 	{
-		char val = static_cast<char>(str[0]);
-		
-		if (!isprint(val)){
-			throw std::runtime_error("unprintable character: ");
+		char val;
+		if (str.size() == 1 && isprint(str[0]))
+		{
+			val = static_cast<char>(str[0]);
+		}
+		else
+		{
+			int value = floatAndDoubleToInt(str);
+			val = static_cast<char>(value);
+			if (!isprint(val))
+			{
+				throw std::runtime_error("unprintable character: ");
+			}
 		}
 		std::cout << "char: '" << val << "'" << std::endl;
 	}
 	catch (std::exception &e)
 	{
 		std::cerr << e.what() << str << std::endl;
-		return ;
 	}
 }
 
@@ -109,11 +137,12 @@ void	ScalarConverter::convert(const std::string& literal)
 
 	if (strIsChar(literal))
 	{
-		charToChar(literal);
+		ToChar(literal);
 		charToInt(literal);
 		charToFloat(literal);
 		charToDouble(literal);
 	}
+	ToChar(literal);
 	// else if (strIsInt(literal))
 	// {
 	// 	intToChar(literal);
