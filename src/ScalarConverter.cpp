@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaraniemela <saaraniemela@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:09:21 by sniemela          #+#    #+#             */
-/*   Updated: 2025/07/29 10:51:09 by sniemela         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:08:40 by saaraniemel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		floatAndDoubleToInt(const std::string &str)
 	}
 	catch (std::exception &e)
 	{
-		std::cout << e.what() << ": couldn't convert to int\n";
-		throw std::runtime_error("unprintable character: ");
+		// std::cout << e.what() << ": couldn't convert to int\n";
+		throw std::runtime_error("impossible");
 	}
 	return (ret);
 }
@@ -58,19 +58,19 @@ void	ToChar(const std::string &str)
 			}
 			catch (std::exception &e)
 			{
-				std::cerr << e.what() << str << std::endl;
+				std::cerr << "char: " << e.what() << std::endl;
 				return ;
 			}
 			if (!isprint(val))
 			{
-				throw std::runtime_error("unprintable character: ");
+				throw std::runtime_error("Non displayable");
 			}
 		}
 		std::cout << "char: '" << val << "'" << std::endl;
 	}
 	catch (std::exception &e)
 	{
-		std::cerr << e.what() << str << std::endl;
+		std::cerr << "char: " << e.what() << std::endl;
 	}
 }
 
@@ -111,23 +111,23 @@ void	intToInt(const std::string &str)
 		if (val < INT_MIN || val > INT_MAX){
 			throw std::runtime_error("exceeds int limits");
 		}
-		std::cout << "int: '" << static_cast<int>(val) << "'" << std::endl; 
+		std::cout << "int: " << static_cast<int>(val) << std::endl; 
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "Impossible: " << str << " " << e.what() << std::endl;
+		std::cout << "int: impossible: " << str << " " << e.what() << std::endl;
 	}
 }
 
 void	intToFloat(const std::string &str)
 {
 	// SHOULD WE CONVERT IF EXCEEDS FLOAT'S OR INTS LIMITS?
-	std::cout << "float: '" << str << ".0f'" << std::endl;
+	std::cout << "float: " << str << ".0f" << std::endl;
 }
 
 void	intToDouble(const std::string &str)
 {
-	std::cout << "double: '" << str << ".0'" << std::endl;
+	std::cout << "double: " << str << ".0" << std::endl;
 }
 
 // bool is_number(const std::string& s)
@@ -137,6 +137,85 @@ void	intToDouble(const std::string &str)
 // return !s.empty() && it == s.end();
 // }
 
+bool	strIsFloat(const std::string &str)
+{
+	return (std::regex_match(str, std::regex(R"(\d{1,39}\.\d{1,7}f)")));
+}
+
+void	floatToInt(const std::string &str)
+{
+	try 
+	{
+		int val = floatAndDoubleToInt(str);
+		std::cout << "int: " << val << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "int: " << e.what() << std::endl;
+		return ;
+	}
+}
+
+void	floatToFloat(const std::string &str)
+{
+	std::cout << "float: " << str << "\n"; 
+}
+
+void	floatToDouble(const std::string &str)
+{
+	std::string temp = str;
+	temp.pop_back();
+	
+	std::cout << "double: " << temp << std::endl;
+}
+
+bool	strIsDouble(const std::string &str)
+{
+	return (std::regex_match(str, std::regex(R"(\d{1,309}\.\d{1,15})")));
+}
+
+void	doubleToInt(const std::string &str)
+{
+	try {
+		int val = floatAndDoubleToInt(str);
+		std::cout << "int: " << val << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "int: " << e.what() << std::endl;
+	}
+	
+}
+
+void	doubleToDouble(const std::string &str)
+{
+	std::cout << "double: " << str << std::endl;
+
+	// try 
+	// {
+	// 	double val = std::stod(str);
+	// 	std::cout << "double: " << val << std::endl;
+	// }
+	// catch  (std::exception &e)
+	// {
+	// 	std::cout << "double: impossible: " << e.what() << std::endl;
+	// 	return ;
+	// }
+}
+
+void	doubleToFloat(const std::string &str)
+{
+	try 
+	{
+		double val = std::stod(str);
+		std::cout << "float: " << static_cast<float>(val) << "f\n";
+	}
+	catch  (std::exception &e)
+	{
+		std::cout << "float: impossible " << e.what() << std::endl;
+		return ;
+	}
+}
 
 void	ScalarConverter::convert(const std::string& literal)
 {
@@ -145,21 +224,34 @@ void	ScalarConverter::convert(const std::string& literal)
 
 	if (strIsChar(literal))
 	{
-		ToChar(literal);
+		std::cout << "CHAR\n";
+		ToChar(literal); // Prints even is above or under ASCIIS
 		charToInt(literal);
 		charToFloat(literal);
 		charToDouble(literal);
 	}
 	else if (strIsInt(literal))
 	{
+		std::cout << "INT\n";
 		ToChar(literal);
 		intToInt(literal);
 		intToFloat(literal);
 		intToDouble(literal);
 	}
-	else if (stdIsFloat(literal))
+	else if (strIsFloat(literal))
 	{
-
+		std::cout << "FLOAT\n";
+		ToChar(literal);
+		floatToInt(literal);
+		floatToFloat(literal); // need to get and set precision
+		floatToDouble(literal);
 	}
-
+	else if (strIsDouble(literal))
+	{
+		std::cout << "DOUBLE\n";
+		ToChar(literal);
+		doubleToInt(literal);
+		doubleToDouble(literal); // need to get and set precision
+		doubleToFloat(literal);
+	}
 }

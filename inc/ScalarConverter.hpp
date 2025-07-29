@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaraniemela <saaraniemela@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:42:55 by sniemela          #+#    #+#             */
-/*   Updated: 2025/07/29 10:39:34 by sniemela         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:45:21 by saaraniemel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <string>
 #include <iostream>
 #include <climits>
+#include <regex>
+#include <sstream>
 
 class ScalarConverter
 {
