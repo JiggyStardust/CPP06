@@ -6,7 +6,7 @@
 /*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:42:55 by sniemela          #+#    #+#             */
-/*   Updated: 2025/07/24 09:38:12 by sniemela         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:39:34 by sniemela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <string>
 #include <iostream>
+#include <climits>
 
 class ScalarConverter
 {

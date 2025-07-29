@@ -6,7 +6,7 @@
 /*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:09:21 by sniemela          #+#    #+#             */
-/*   Updated: 2025/07/24 13:41:52 by sniemela         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:51:09 by sniemela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int		floatAndDoubleToInt(const std::string &str)
 	{
 		temp.pop_back();
 	}
-	try 
-	{
+	try{
 		ret = std::stoi(temp);
 	}
 	catch (std::exception &e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cout << e.what() << ": couldn't convert to int\n";
+		throw std::runtime_error("unprintable character: ");
 	}
 	return (ret);
 }
@@ -49,8 +49,18 @@ void	ToChar(const std::string &str)
 		}
 		else
 		{
-			int value = floatAndDoubleToInt(str);
-			val = static_cast<char>(value);
+			try 
+			{
+				int value = floatAndDoubleToInt(str);
+				// std::cout << "value as int: " << value << std::endl;
+				val = static_cast<char>(value);
+				// std::cout << "val as char: " << val << std::endl;
+			}
+			catch (std::exception &e)
+			{
+				std::cerr << e.what() << str << std::endl;
+				return ;
+			}
 			if (!isprint(val))
 			{
 				throw std::runtime_error("unprintable character: ");
@@ -82,47 +92,43 @@ void	charToDouble(const std::string &str)
 	std::cout << "double: " << val << std::endl;
 }
 
-// bool	strIsInt(const std::string &str)
-// {
-// 	std::string::const_iterator it = str.begin();
-// 	while (it != str.end() && std::isdigit(*it))
-// 	{
-// 		it++;
-// 	}
-// 	return (!str.empty() && it == str.end());
-// }
+bool	strIsInt(const std::string &str)
+{
+	std::string::const_iterator it = str.begin();
+	while (it != str.end() && std::isdigit(*it))
+	{
+		it++;
+	}
+	return (!str.empty() && it == str.end());
+}
 
-// void	intToInt(const std::string &str)
-// {	
-// 	long val;
-// 	try 
-// 	{
-// 		val = std::stol(str);
-// 		if (val < INT_MIN || val > INT_MAX){
-// 			throw std::runtime_error("exceeds int limits");
-// 		}
-// 		std::cout << "int: " << static_cast<int>(val) << std::endl; 
-// 	}
-// 	catch (std::exception &e)
-// 	{
-// 		std::cout << "Impossible: " << str << " " << e.what() << std::endl;
-// 	}
-// }
+void	intToInt(const std::string &str)
+{	
+	long val;
+	try 
+	{
+		val = std::stol(str);
+		if (val < INT_MIN || val > INT_MAX){
+			throw std::runtime_error("exceeds int limits");
+		}
+		std::cout << "int: '" << static_cast<int>(val) << "'" << std::endl; 
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Impossible: " << str << " " << e.what() << std::endl;
+	}
+}
 
-// void	intToChar(const std::string &str)
-// {
-	
-// }
+void	intToFloat(const std::string &str)
+{
+	// SHOULD WE CONVERT IF EXCEEDS FLOAT'S OR INTS LIMITS?
+	std::cout << "float: '" << str << ".0f'" << std::endl;
+}
 
-// void	intToFloat(const std::string &str)
-// {
-	
-// }
-
-// void	intToDouble(const std::string &str)
-// {
-	
-// }
+void	intToDouble(const std::string &str)
+{
+	std::cout << "double: '" << str << ".0'" << std::endl;
+}
 
 // bool is_number(const std::string& s)
 // {
@@ -130,6 +136,8 @@ void	charToDouble(const std::string &str)
 // while (it != s.end() && std::isdigit(*it)) ++it;
 // return !s.empty() && it == s.end();
 // }
+
+
 void	ScalarConverter::convert(const std::string& literal)
 {
 	// if string is empty or there something else wrong
@@ -142,13 +150,16 @@ void	ScalarConverter::convert(const std::string& literal)
 		charToFloat(literal);
 		charToDouble(literal);
 	}
-	ToChar(literal);
-	// else if (strIsInt(literal))
-	// {
-	// 	intToChar(literal);
-	// 	intToInt(literal);
-	// 	intToFloat(literal);
-	// 	intToDouble(literal);
-	// }
+	else if (strIsInt(literal))
+	{
+		ToChar(literal);
+		intToInt(literal);
+		intToFloat(literal);
+		intToDouble(literal);
+	}
+	else if (stdIsFloat(literal))
+	{
+
+	}
 
 }
