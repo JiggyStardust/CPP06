@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaraniemela <saaraniemela@student.42.f    +#+  +:+       +#+        */
+/*   By: sniemela <sniemela@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:42:55 by sniemela          #+#    #+#             */
-/*   Updated: 2025/07/29 15:45:21 by saaraniemel      ###   ########.fr       */
+/*   Updated: 2025/08/05 10:39:36 by sniemela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <string>
+#include <iomanip>
 #include <iostream>
 #include <climits>
 #include <regex>
