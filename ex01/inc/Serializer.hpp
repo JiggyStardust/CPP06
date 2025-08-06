@@ -5,11 +5,7 @@
 #include <iostream>
 #include <string>
 
-struct Data
-{
-	int	val;
-	std::string str;
-};
+#include "Data.hpp"
 
 class Serializer
 {
