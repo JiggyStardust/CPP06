@@ -70,7 +70,8 @@ void identify(Base& p) {
 
 int main(void)
 {
-	try {
+	try 
+	{
 
 		Base *obj = generate();
 
@@ -79,6 +80,8 @@ int main(void)
 	
 		std::cout << "\n\nIdentifying object with reference:\n";
 		identify(*obj);
+
+		delete obj;
 	}
 	catch (std::exception &e)
 	{

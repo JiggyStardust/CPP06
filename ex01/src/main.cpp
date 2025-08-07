@@ -48,7 +48,7 @@ int	main()
 		else{
 			std::cout << "\nPointers are equal!" << std::endl;
 		}
-		}
+	}
 	catch (std::exception &e)
 	{
 		std::cout << "Error: " << e.what() << std::endl;
